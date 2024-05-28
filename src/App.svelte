@@ -6,13 +6,18 @@
 
     let processedData = [];
     let modelResults;
+    let maxIterations = 10000;  // Start with a default value
 
-    onMount(async () => {
+    onMount(() => {
         processedData = preprocessData(irisData);
+        runModel();  // Run model initially on mount
+    });
+
+    function runModel() {
         const X = processedData.map(d => [1, d.sepalLength, d.sepalWidth]);
         const y = processedData.map(d => d.species);
-        modelResults = gradientDescent(X, y, 0.01, 100);
-    });
+        modelResults = gradientDescent(X, y, 0.01, maxIterations);
+    }
 </script>
 
 <main>

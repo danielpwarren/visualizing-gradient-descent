@@ -19,18 +19,32 @@ function computeCost(predictions, y) {
     }, 0);
 }
 
-function gradientDescent(X, y, lr, iterations) {
+function gradientDescent(X, y, lr, maxIterations, tolerance = 0.0001) {
     let weights = new Array(X[0].length).fill(0);
     let m = X.length;
     let costHistory = [];
     let weightsHistory = [];
+    let converged = false;
 
-    for (let i = 0; i < iterations; i++) {
+    let previousCost = Infinity;
+    let iteration = 0;
+
+    while (!converged && iteration < maxIterations) {
         let predictions = X.map(inputs => sigmoid(inputs.reduce((acc, input, idx) => acc + input * weights[idx], 0)));
-        weights = weights.map((w, j) => w - lr * (1/m) * predictions.reduce((acc, pred, idx) => acc + (pred - y[idx]) * X[idx][j], 0));
+        let currentCost = computeCost(predictions, y);
+        costHistory.push(currentCost);
         weightsHistory.push([...weights]);
-        let cost = computeCost(predictions, y);
-        costHistory.push(cost);
+
+        // Update weights
+        weights = weights.map((w, j) => w - lr * (1/m) * predictions.reduce((acc, pred, idx) => acc + (pred - y[idx]) * X[idx][j], 0));
+
+        // Check for convergence (i.e., if the change in cost is less than the tolerance)
+        if (Math.abs(previousCost - currentCost) < tolerance) {
+            converged = true;
+        }
+
+        previousCost = currentCost;
+        iteration++;
     }
 
     return { weights, costHistory, weightsHistory };

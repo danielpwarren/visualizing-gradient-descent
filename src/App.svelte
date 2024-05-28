@@ -2,7 +2,9 @@
     import { onMount } from 'svelte';
     import DecisionBoundary from './components/decisionboundary.svelte';
     import { preprocessData, gradientDescent } from './components/logisticregression.js';
+    import LossGraph from './components/lossgraph.svelte';
     import irisData from './assets/irisdata.json';
+    
 
     let processedData = [];
     let modelResults;
@@ -24,9 +26,11 @@
     <h1>Logistic Regression Visualization</h1>
     {#if modelResults}
          <DecisionBoundary data={processedData} weightsHistory={modelResults.weightsHistory} costHistory={modelResults.costHistory}/>
+         <LossGraph costHistory = {modelResults.costHistory}/>
     {:else}
         <p>Loading model results...</p>
     {/if}
+
 </main>
 
 <style>

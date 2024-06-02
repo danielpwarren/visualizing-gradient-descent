@@ -1,7 +1,7 @@
 <script>
+  import ScrollyTeller from "./components/ScrollyTeller.svelte";
 </script>
 
-<main>test</main>
-
-<style>
-</style>
+<main>
+  <ScrollyTeller />
+</main>

@@ -16,6 +16,8 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "d3": "^7.9.0"
+    "@sveltejs/svelte-scroller": "^2.0.7",
+    "d3": "^7.9.0",
+    "svelte-scroller": "^1.2.2"
   }
 }

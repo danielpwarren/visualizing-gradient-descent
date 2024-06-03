@@ -1,5 +1,5 @@
 <script>
-  import ScrollyTeller from "./components/ScrollyTeller.svelte";
+  import ScrollyTeller from "./Components/ScrollyTeller.svelte";
 </script>
 
 <main>

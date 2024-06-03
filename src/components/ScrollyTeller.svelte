@@ -1,16 +1,13 @@
 <script>
   // @ts-ignore
   import Scroller from "@sveltejs/svelte-scroller";
+  // @ts-ignore
+  import CartesianPlane from "./CartesianPlane.svelte";
 
   let count, index, offset, progress;
 </script>
 
 <div>
-  Gradient Descent is the backbone of all modern machine learning algorithms,
-  everything from linear regression to language models use gradient descent to
-  optimize their parameters. In this article, we'll explore just how this
-  seemingly magical algorithm works.
-
   <Scroller
     top={0.0}
     bottom={1}
@@ -21,34 +18,24 @@
     bind:progress
   >
     <div class="background" slot="background">
-      <div class="progress-bars">
-        <p>current section: <strong>{index + 1}/{count}</strong></p>
-        <progress value={count ? (index + 1) / count : 0} />
-
-        <p>offset in current section</p>
-        <progress value={offset || 0} />
-
-        <p>total progress</p>
-        <progress value={progress || 0} />
-      </div>
+      <!-- <BackgroundPlot {index} /> -->
+      <CartesianPlane {index} />
     </div>
 
     <div class="foreground" slot="foreground">
-      <section>
-        <h1>Introduction to optimization</h1>
-        <p>
-          Visual: Start with a simple 2D graph depicting a parabolic curve
-          representing a cost function.
-        </p>
-        <p>
-          Optimization lies at the heart of many machine learning algorithms.
-          It's the process of finding the best parameters or settings for a
-          model to minimize errors and improve accuracy. In this journey, we'll
-          explore one of the most fundamental optimization techniques used in
-          machine learning—gradient descent.
-        </p>
+      <section class="centered">
+        <div class="hero">
+          <h1>A Visual Guide to Gradient Descent</h1>
+          <p>
+            Optimization lies at the heart of many machine learning algorithms.
+            It's the process of finding the best parameters or settings for a
+            model to minimize errors and improve accuracy. In this visual
+            journey, we'll explore one of the most fundamental optimization
+            techniques used in machine learning, gradient descent.
+          </p>
+        </div>
       </section>
-      <section>
+      <section class="translate-right">
         <h1>Concept of gradients and derivatives</h1>
         <p>
           Visual: An animated sequence showing a point moving down the curve,
@@ -132,7 +119,6 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    outline: green solid 3px;
   }
 
   .foreground {
@@ -140,23 +126,30 @@
     margin: 0 auto;
     height: auto;
     position: relative;
-    outline: red solid 3px;
-  }
-
-  .progress-bars {
-    position: absolute;
-    background: rgba(170, 51, 120, 0.2) /*  40% opaque */;
-    visibility: visible;
   }
 
   section {
     height: 90vh;
-    background-color: rgba(0, 0, 0, 0.2); /* 20% opaque */
-    /* color: white; */
-    outline: magenta solid 3px;
+    color: white;
     text-align: center;
-    max-width: 750px; /* adjust at will */
     padding: 1em;
     margin: 0 0 2em 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .centered {
+    padding: 2em;
+  }
+
+  .hero {
+    background-color: rgba(0, 0, 0, 0.95);
+    border-radius: 10px;
+  }
+
+  .translate-right {
+    transform: translateX(50%);
   }
 </style>

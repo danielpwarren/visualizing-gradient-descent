@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "x": 5.1,
+    "y": 3.5,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 2,
+    "x": 4.9,
+    "y": 3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 3,
+    "x": 4.7,
+    "y": 3.2,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 4,
+    "x": 4.6,
+    "y": 3.1,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 5,
+    "x": 5,
+    "y": 3.6,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 6,
+    "x": 5.4,
+    "y": 3.9,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 7,
+    "x": 4.6,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 8,
+    "x": 5,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 9,
+    "x": 4.4,
+    "y": 2.9,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 10,
+    "x": 4.9,
+    "y": 3.1,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 11,
+    "x": 5.4,
+    "y": 3.7,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 12,
+    "x": 4.8,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 13,
+    "x": 4.8,
+    "y": 3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 14,
+    "x": 4.3,
+    "y": 3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 15,
+    "x": 5.8,
+    "y": 4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 16,
+    "x": 5.7,
+    "y": 4.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 17,
+    "x": 5.4,
+    "y": 3.9,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 18,
+    "x": 5.1,
+    "y": 3.5,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 19,
+    "x": 5.7,
+    "y": 3.8,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 20,
+    "x": 5.1,
+    "y": 3.8,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 21,
+    "x": 5.4,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 22,
+    "x": 5.1,
+    "y": 3.7,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 23,
+    "x": 4.6,
+    "y": 3.6,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 24,
+    "x": 5.1,
+    "y": 3.3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 25,
+    "x": 4.8,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 26,
+    "x": 5,
+    "y": 3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 27,
+    "x": 5,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 28,
+    "x": 5.2,
+    "y": 3.5,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 29,
+    "x": 5.2,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 30,
+    "x": 4.7,
+    "y": 3.2,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 31,
+    "x": 4.8,
+    "y": 3.1,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 32,
+    "x": 5.4,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 33,
+    "x": 5.2,
+    "y": 4.1,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 34,
+    "x": 5.5,
+    "y": 4.2,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 35,
+    "x": 4.9,
+    "y": 3.1,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 36,
+    "x": 5,
+    "y": 3.2,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 37,
+    "x": 5.5,
+    "y": 3.5,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 38,
+    "x": 4.9,
+    "y": 3.1,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 39,
+    "x": 4.4,
+    "y": 3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 40,
+    "x": 5.1,
+    "y": 3.4,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 41,
+    "x": 5,
+    "y": 3.5,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 42,
+    "x": 4.5,
+    "y": 2.3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 43,
+    "x": 4.4,
+    "y": 3.2,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 44,
+    "x": 5,
+    "y": 3.5,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 45,
+    "x": 5.1,
+    "y": 3.8,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 46,
+    "x": 4.8,
+    "y": 3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 47,
+    "x": 5.1,
+    "y": 3.8,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 48,
+    "x": 4.6,
+    "y": 3.2,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 49,
+    "x": 5.3,
+    "y": 3.7,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 50,
+    "x": 5,
+    "y": 3.3,
+    "class": "Iris-setosa"
+  },
+  {
+    "id": 51,
+    "x": 7,
+    "y": 3.2,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 52,
+    "x": 6.4,
+    "y": 3.2,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 53,
+    "x": 6.9,
+    "y": 3.1,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 54,
+    "x": 5.5,
+    "y": 2.3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 55,
+    "x": 6.5,
+    "y": 2.8,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 56,
+    "x": 5.7,
+    "y": 2.8,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 57,
+    "x": 6.3,
+    "y": 3.3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 58,
+    "x": 4.9,
+    "y": 2.4,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 59,
+    "x": 6.6,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 60,
+    "x": 5.2,
+    "y": 2.7,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 61,
+    "x": 5,
+    "y": 2,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 62,
+    "x": 5.9,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 63,
+    "x": 6,
+    "y": 2.2,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 64,
+    "x": 6.1,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 65,
+    "x": 5.6,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 66,
+    "x": 6.7,
+    "y": 3.1,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 67,
+    "x": 5.6,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 68,
+    "x": 5.8,
+    "y": 2.7,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 69,
+    "x": 6.2,
+    "y": 2.2,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 70,
+    "x": 5.6,
+    "y": 2.5,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 71,
+    "x": 5.9,
+    "y": 3.2,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 72,
+    "x": 6.1,
+    "y": 2.8,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 73,
+    "x": 6.3,
+    "y": 2.5,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 74,
+    "x": 6.1,
+    "y": 2.8,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 75,
+    "x": 6.4,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 76,
+    "x": 6.6,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 77,
+    "x": 6.8,
+    "y": 2.8,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 78,
+    "x": 6.7,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 79,
+    "x": 6,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 80,
+    "x": 5.7,
+    "y": 2.6,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 81,
+    "x": 5.5,
+    "y": 2.4,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 82,
+    "x": 5.5,
+    "y": 2.4,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 83,
+    "x": 5.8,
+    "y": 2.7,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 84,
+    "x": 6,
+    "y": 2.7,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 85,
+    "x": 5.4,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 86,
+    "x": 6,
+    "y": 3.4,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 87,
+    "x": 6.7,
+    "y": 3.1,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 88,
+    "x": 6.3,
+    "y": 2.3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 89,
+    "x": 5.6,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 90,
+    "x": 5.5,
+    "y": 2.5,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 91,
+    "x": 5.5,
+    "y": 2.6,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 92,
+    "x": 6.1,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 93,
+    "x": 5.8,
+    "y": 2.6,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 94,
+    "x": 5,
+    "y": 2.3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 95,
+    "x": 5.6,
+    "y": 2.7,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 96,
+    "x": 5.7,
+    "y": 3,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 97,
+    "x": 5.7,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 98,
+    "x": 6.2,
+    "y": 2.9,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 99,
+    "x": 5.1,
+    "y": 2.5,
+    "class": "Iris-versicolor"
+  },
+  {
+    "id": 100,
+    "x": 5.7,
+    "y": 2.8,
+    "class": "Iris-versicolor"
+  }
+]

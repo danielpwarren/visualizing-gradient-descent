@@ -21,6 +21,7 @@ body {
   height: 100%;
 }
 
+/* Disable light mode for now
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -32,4 +33,4 @@ body {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

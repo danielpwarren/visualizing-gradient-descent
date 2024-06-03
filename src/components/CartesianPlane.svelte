@@ -149,16 +149,8 @@
   }
 
   function resize() {
-    if (index === 0) {
-      height = svg.clientHeight;
-      width = svg.clientWidth;
-    } else if (index === 1) {
-      height = Math.min(svg.clientHeight, svg.clientWidth);
-      width = height;
-    } else {
-      height = svg.clientHeight - margin.top - margin.bottom;
-      width = svg.clientWidth - margin.left - margin.right;
-    }
+    height = svg.clientHeight - margin.top - margin.bottom;
+    width = svg.clientWidth - margin.left - margin.right;
     createScales();
     updateScales(getDomain());
   }
@@ -251,25 +243,9 @@
 
 <svg
   bind:this={svg}
-  class:full-screen={index === 0}
-  class:square={index === 1}
   style="width: 100%; height: 100%; background: transparent;"
 >
-  <g class="x-axis" class:hidden={index === 0}></g>
-  <g class="y-axis" class:hidden={index === 0}></g>
+  <g class="x-axis"></g>
+  <g class="y-axis"></g>
   <g class="points" transform={`translate(${margin.left}, ${margin.top})`}></g>
 </svg>
-
-<style>
-  .hidden {
-    display: none;
-  }
-  .full-screen {
-    width: 100vw;
-    height: 100vh;
-  }
-  .square {
-    width: 100vw;
-    height: 100vw;
-  }
-</style>

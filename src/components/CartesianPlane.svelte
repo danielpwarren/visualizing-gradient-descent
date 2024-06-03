@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import { fade } from "svelte/transition";
   import * as d3 from "d3";
   import randomData from "../assets/random_data.json";
   import irisData from "../assets/iris_data.json";
@@ -15,7 +16,7 @@
   let width, height;
   let xScale, yScale;
   let xAxis, yAxis;
-  const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+  let margin = { top: 20, right: 20, bottom: 40, left: 50 };
   const padding = 0.25;
 
   let points = [];
@@ -32,7 +33,7 @@
     const xExtent = d3.extent(data, (d) => d.x);
     const yExtent = d3.extent(data, (d) => d.y);
     const xPadding = (xExtent[1] - xExtent[0]) * padding;
-    const yPadding = (yExtent[1] - xExtent[0]) * padding;
+    const yPadding = (yExtent[1] - yExtent[0]) * padding;
     return {
       x: [xExtent[0] - xPadding, xExtent[1] + xPadding],
       y: [yExtent[0] - yPadding, yExtent[1] + yPadding],
@@ -149,8 +150,16 @@
   }
 
   function resize() {
-    height = svg.clientHeight - margin.top - margin.bottom;
-    width = svg.clientWidth - margin.left - margin.right;
+    if (index === 0) {
+      margin = { top: 0, right: 0, bottom: 0, left: 0 };
+      height = svg.clientHeight - margin.top - margin.bottom;
+      width = svg.clientWidth - margin.left - margin.right;
+    } else {
+      margin = { top: 20, right: 20, bottom: 40, left: 50 };
+      width = height = svg.clientHeight - margin.top - margin.bottom;
+      //svg.clientWidth - margin.left - margin.right;
+    }
+
     createScales();
     updateScales(getDomain());
   }
@@ -204,6 +213,21 @@
         updateScales(irisDomain);
         break;
       case 2:
+        // Line of Best Fit Phase
+        points = irisData.map((d, i) => ({
+          id: i,
+          x: d.x,
+          y: d.y,
+          color:
+            d.class === "Iris-setosa"
+              ? color_1
+              : d.class === "Iris-versicolor"
+                ? color_2
+                : color_3,
+        }));
+        updateScales(irisDomain);
+        break;
+      case 3:
         points = verticalData.map((d, i) => ({
           id: i,
           x: d.x,
@@ -212,7 +236,7 @@
         }));
         updateScales(verticalDomain);
         break;
-      case 3:
+      case 4:
         points = spiralData.map((d, i) => ({
           id: i,
           x: d.x,
@@ -227,10 +251,13 @@
   function getDomain() {
     switch (index) {
       case 1:
+      case 2: // Line of Best Fit Phase
         return irisDomain;
-      case 2:
-        return verticalDomain;
       case 3:
+        return verticalDomain;
+      case 4:
+      case 5:
+      case 6:
         return spiralDomain;
       default:
         return randomDomain;
@@ -238,14 +265,27 @@
   }
 
   $: handleIndexChange(index);
-  $: index, console.log(index);
+  $: if (index >= 0) resize();
+  $: svgStyle =
+    index === 0
+      ? "width: 100%; height: 100vh;"
+      : "width: 100%; height: 100%; aspect-ratio: 1 / 1;";
+  $: showAxes = index > 0;
 </script>
 
-<svg
-  bind:this={svg}
-  style="width: 100%; height: 100%; background: transparent;"
->
-  <g class="x-axis"></g>
-  <g class="y-axis"></g>
-  <g class="points" transform={`translate(${margin.left}, ${margin.top})`}></g>
+<svg bind:this={svg} style={svgStyle}>
+  <g
+    class="x-axis"
+    style="opacity: {showAxes ? 1 : 0};"
+    in:fade={{ delay: 300, duration: 300 }}
+  ></g>
+  <g
+    class="y-axis"
+    style="opacity: {showAxes ? 1 : 0};"
+    in:fade={{ delay: 300, duration: 300 }}
+  ></g>
+  <g
+    class="points"
+    transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
+  ></g>
 </svg>

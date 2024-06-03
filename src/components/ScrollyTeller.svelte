@@ -1,10 +1,34 @@
 <script>
+  import { onMount, onDestroy } from "svelte";
   // @ts-ignore
   import Scroller from "@sveltejs/svelte-scroller";
   // @ts-ignore
   import CartesianPlane from "./CartesianPlane.svelte";
 
-  let count, index, offset, progress;
+  let count, index, offset, progress, viewportHeight, viewportWidth;
+
+  onMount(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  });
+
+  onDestroy(() => {
+    window.removeEventListener("resize", handleResize);
+  });
+
+  const handleResize = () => {
+    viewportHeight = window.innerHeight;
+    viewportWidth = window.innerWidth;
+  };
+
+  $: foregroundStyle = `
+    width: ${index > 0 ? `${viewportWidth - viewportHeight}px` : "50%"};
+    transform: ${index > 0 ? `translateX(${viewportHeight}px)` : "translateX(0%)"};
+    ${index < 1 ? "margin: 0 auto" : ""};
+    transition: transform 0.5s ease-in-out, width 0.5s ease;
+    position: relative;
+  `;
 </script>
 
 <div>
@@ -18,11 +42,10 @@
     bind:progress
   >
     <div class="background" slot="background">
-      <!-- <BackgroundPlot {index} /> -->
       <CartesianPlane {index} />
     </div>
 
-    <div class="foreground" slot="foreground">
+    <div class="foreground" slot="foreground" style={foregroundStyle}>
       <section class="centered">
         <div class="hero">
           <h1>A Visual Guide to Gradient Descent</h1>
@@ -50,7 +73,7 @@
           curve.
         </p>
       </section>
-      <section>
+      <section class="translate-right">
         <h1>Basic algorithm of gradient descent</h1>
         <p>
           Visual: An animated sequence showing a point moving down the curve,
@@ -64,7 +87,7 @@
           learning rate. Let's see how this plays out.
         </p>
       </section>
-      <section>
+      <section class="translate-right">
         <h1>Variants of gradient descent</h1>
         <p>
           Visual: Comparative visuals of stochastic, batch, and mini-batch
@@ -80,7 +103,7 @@
           function.
         </p>
       </section>
-      <section>
+      <section class="translate-right">
         <h1>Practical application and convergence</h1>
         <p>
           Visual: Graphs showing convergence over iterations under different
@@ -94,7 +117,7 @@
           significantly affect the outcome, as demonstrated below.
         </p>
       </section>
-      <section>
+      <section class="translate-right">
         <h1>Playground</h1>
         <p>
           Visual: Interactive sliders controlling the learning rate, initial
@@ -119,13 +142,7 @@
     width: 100%;
     height: 100vh;
     position: relative;
-  }
-
-  .foreground {
-    width: 50%;
-    margin: 0 auto;
-    height: auto;
-    position: relative;
+    outline: green solid 3px;
   }
 
   section {
@@ -147,9 +164,5 @@
   .hero {
     background-color: rgba(0, 0, 0, 0.95);
     border-radius: 10px;
-  }
-
-  .translate-right {
-    transform: translateX(50%);
   }
 </style>

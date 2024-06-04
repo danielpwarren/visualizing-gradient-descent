@@ -4,6 +4,12 @@
   import Scroller from "@sveltejs/svelte-scroller";
   // @ts-ignore
   import CartesianPlane from "./CartesianPlane.svelte";
+  import Katex from "./Katex.svelte";
+
+  const mse = `\\frac{1}{n} \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2`;
+  const y_i = `y_i`;
+  const y_hat_i = `\\hat{y}_i`;
+  const guess_line = `y = -0.1x + 4`;
 
   let count, index, offset, progress, viewportHeight, viewportWidth;
 
@@ -35,7 +41,7 @@
   <Scroller
     top={0.0}
     bottom={1}
-    threshold={0.5}
+    threshold={0.33}
     bind:count
     bind:index
     bind:offset
@@ -50,41 +56,42 @@
         <div class="hero">
           <h1>A Visual Guide to Gradient Descent</h1>
           <p>
-            Optimization lies at the heart of many machine learning algorithms.
-            It's the process of finding the best parameters or settings for a
-            model to minimize errors and improve accuracy. In this visual
-            journey, we'll explore one of the most fundamental optimization
-            techniques used in machine learning, gradient descent.
+            Optimization lies at the heart of all modern machine learning
+            algorithms. It's the process of finding the best parameters or
+            settings for a model to minimize errors and improve accuracy. In
+            this visual journey, we'll explore one of the most fundamental
+            optimization techniques used in machine learning, gradient descent.
           </p>
         </div>
       </section>
       <section class="translate-right">
-        <h1>Concept of gradients and derivatives</h1>
+        <h1>The Fundamentals</h1>
         <p>
-          Visual: An animated sequence showing a point moving down the curve,
-          step-by-step, adjusting its position based on the gradient.
-        </p>
-        <p>
-          Gradients and derivatives are crucial for understanding how algorithms
-          adjust their parameters during training. A gradient measures the slope
-          of the tangent to the curve of the cost function at any point,
-          providing the direction and rate of steepest ascent. By moving in the
-          opposite direction, gradient descent seeks the lowest point on the
-          curve.
+          Lets start with a classic example, this is the Iris flower dataset.
+          For the purposes of our demonstration, we will use only two features:
+          sepal length (x axis) and sepal width (y axis). It's easy for us to
+          see that there's a clear seperation in the data, but how can a
+          computer see the same?
+          <br /> <br />
+          We can try and draw a line that seperates the two classes but we need a
+          way to messure how "good" that line is at fitting the data. This is called
+          the cost function. A common cost function is the mean squared error.
         </p>
       </section>
       <section class="translate-right">
-        <h1>Basic algorithm of gradient descent</h1>
+        <h1>Defining a Loss Function</h1>
         <p>
-          Visual: An animated sequence showing a point moving down the curve,
-          step-by-step, adjusting its position based on the gradient.
-        </p>
-        <p>
-          Gradient descent updates the parameters iteratively to minimize the
-          cost function. Starting from a random point, the algorithm calculates
-          the gradient and takes a step proportional to the negative of the
-          gradient. This step size is controlled by a parameter known as the
-          learning rate. Let's see how this plays out.
+          The mean squared error loss is defined as: <Katex
+            math={mse}
+            displayMode
+          />
+          Where <Katex math={y_i} /> is the actual value and <Katex
+            math={y_hat_i}
+          /> is the predicted value. We'll use this loss function to evaluate the
+          performance of an example model. A good starting line could be <Katex
+            math={guess_line}
+            displayMode
+          />
         </p>
       </section>
       <section class="translate-right">
@@ -160,8 +167,13 @@
     padding: 2em;
   }
 
+  p {
+    text-align: left;
+  }
+
   .hero {
-    background-color: rgba(0, 0, 0, 0.95);
-    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    padding: 2em;
   }
 </style>

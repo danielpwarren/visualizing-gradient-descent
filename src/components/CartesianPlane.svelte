@@ -6,6 +6,7 @@
   import irisData from "../assets/iris_data.json";
   import verticalData from "../assets/vertical_data.json";
   import spiralData from "../assets/spiral_data.json";
+  import { preprocessData, sigmoid, gradientDescent } from '../components/logisticregression.js';
 
   let color_1 = "#4A90E2";
   let color_2 = "#8BC34A";
@@ -23,6 +24,8 @@
   let velocities = [];
   let animationFrameId;
   let initialLoad = true;
+
+  let iterations = 50;
 
   const randomDomain = { x: [0, 1], y: [0, 1] };
   const irisDomain = calculateDomain(irisData);
@@ -61,7 +64,7 @@
 
         if (point.x > xScale.domain()[1] || point.x < xScale.domain()[0])
           velocities[index].vx *= -1;
-        if (point.y > yScale.domain()[1] || point.y < yScale.domain()[0])
+        if (point.y > yScale.domain()[1] || point.y < xScale.domain()[0])
           velocities[index].vy *= -1;
       });
 
@@ -139,6 +142,56 @@
           .attr("cy", (d) => yScale(d.y)),
       (exit) => exit.remove()
     );
+
+
+// new by making sure the only the last one has decision boundary
+    if (index === 6) {
+      updateDecisionBoundary();
+    } else {
+      clearDecisionBoundary();
+    }
+  }
+//new for adding decision boundary
+  function drawDecisionBoundary() {
+    const X = irisData.map(d => [1, d.x, d.y]); // Add intercept term
+    const y = irisData.map(d => (d.class === "Iris-setosa" ? 0 : 1));
+
+    const { weights } = gradientDescent(X, y, 0.1, iterations);
+
+    const x1 = xScale.domain()[0];
+    const x2 = xScale.domain()[1];
+    const y1 = (-weights[0] - weights[1] * x1) / weights[2];
+    const y2 = (-weights[0] - weights[1] * x2) / weights[2];
+
+    const lineData = [
+      { x: x1, y: y1 },
+      { x: x2, y: y2 }
+    ];
+
+    const line = d3.line()
+      .x(d => xScale(d.x))
+      .y(d => yScale(d.y));
+
+    d3.select(svg)
+      .select(".decision-boundary")
+      .selectAll("path")
+      .data([lineData])
+      .join("path")
+      .attr("d", line)
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+  }
+
+  function clearDecisionBoundary() {
+    d3.select(svg)
+      .select(".decision-boundary")
+      .selectAll("path")
+      .remove();
+  }
+
+  function updateDecisionBoundary() {
+    drawDecisionBoundary();
   }
 
   function updateScales(domain) {
@@ -157,7 +210,6 @@
     } else {
       margin = { top: 20, right: 20, bottom: 40, left: 50 };
       width = height = svg.clientHeight - margin.top - margin.bottom;
-      //svg.clientWidth - margin.left - margin.right;
     }
 
     createScales();
@@ -183,6 +235,9 @@
     });
   });
 
+
+
+//new by adding case 567
   function handleIndexChange(index) {
     cancelAnimationFrame(animationFrameId);
     switch (index) {
@@ -192,7 +247,7 @@
         if (!initialLoad) {
           setTimeout(() => {
             startAnimation();
-          }, 1000); // 1000ms delay before starting the animation
+          }, 1000);
         } else {
           startAnimation();
           initialLoad = false;
@@ -213,7 +268,6 @@
         updateScales(irisDomain);
         break;
       case 2:
-        // Line of Best Fit Phase
         points = irisData.map((d, i) => ({
           id: i,
           x: d.x,
@@ -245,19 +299,63 @@
         }));
         updateScales(spiralDomain);
         break;
+      case 5:
+        points = irisData.map((d, i) => ({
+          id: i,
+          x: d.x,
+          y: d.y,
+          color:
+            d.class === "Iris-setosa"
+              ? color_1
+              : d.class === "Iris-versicolor"
+                ? color_2
+                : color_3,
+        }));
+        updateScales(irisDomain);
+        startAnimation();
+        break;
+      case 6:
+        points = irisData.map((d, i) => ({
+          id: i,
+          x: d.x,
+          y: d.y,
+          color:
+            d.class === "Iris-setosa"
+              ? color_1
+              : d.class === "Iris-versicolor"
+                ? color_2
+                : color_3,
+        }));
+        updateScales(irisDomain);
+        break;
+      case 7:
+        points = irisData.map((d, i) => ({
+          id: i,
+          x: d.x,
+          y: d.y,
+          color:
+            d.class === "Iris-setosa"
+              ? color_1
+              : d.class === "Iris-versicolor"
+                ? color_2
+                : color_3,
+        }));
+        updateScales(irisDomain);
+        break;
     }
   }
 
   function getDomain() {
     switch (index) {
       case 1:
-      case 2: // Line of Best Fit Phase
+      case 2:
+      case 5:
+      case 6:
+      case 7:
         return irisDomain;
       case 3:
         return verticalDomain;
       case 4:
-      case 5:
-      case 6:
         return spiralDomain;
       default:
         return randomDomain;
@@ -273,19 +371,25 @@
   $: showAxes = index > 0;
 </script>
 
+
+
+
 <svg bind:this={svg} style={svgStyle}>
-  <g
-    class="x-axis"
-    style="opacity: {showAxes ? 1 : 0};"
-    in:fade={{ delay: 300, duration: 300 }}
-  ></g>
-  <g
-    class="y-axis"
-    style="opacity: {showAxes ? 1 : 0};"
-    in:fade={{ delay: 300, duration: 300 }}
-  ></g>
-  <g
-    class="points"
-    transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
-  ></g>
+  <g class="x-axis" style="opacity: {showAxes ? 1 : 0};" in:fade={{ delay: 300, duration: 300 }}></g>
+  <g class="y-axis" style="opacity: {showAxes ? 1 : 0};" in:fade={{ delay: 300, duration: 300 }}></g>
+  <g class="points" transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}></g>
+
+  //new 
+  <g class="decision-boundary" transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}></g>
 </svg>
+
+
+
+//new
+{#if index === 6}
+  <div>
+    <label for="iterations">Iterations:</label>
+    <input type="range" id="iterations" min="0" max="200" step="1" bind:value={iterations} on:input={updateDecisionBoundary} />
+    <span>{iterations}</span>
+  </div>
+{/if}

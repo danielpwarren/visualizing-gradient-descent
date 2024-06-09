@@ -4,11 +4,12 @@
   import * as d3 from "d3";
   import randomData from "../assets/random_data.json";
   import irisData from "../assets/iris_data.json";
+  import verticalData from "../assets/vertical_data.json";
+  import spiralData from "../assets/spiral_data.json";
   import { gradientDescent } from "../components/logisticregression.js";
 
   let color_1 = "#4A90E2";
   let color_2 = "#8BC34A";
-  let color_3 = "#FF5733";
 
   export let index;
   let svg;
@@ -27,6 +28,8 @@
 
   const randomDomain = { x: [0, 1], y: [0, 1] };
   const irisDomain = calculateDomain(irisData);
+  const verticalDomain = calculateDomain(verticalData);
+  const spiralDomain = calculateDomain(spiralData);
 
   function calculateDomain(data) {
     const xExtent = d3.extent(data, (d) => d.x);
@@ -60,7 +63,7 @@
 
         if (point.x > xScale.domain()[1] || point.x < xScale.domain()[0])
           velocities[index].vx *= -1;
-        if (point.y > yScale.domain()[1] || point.y < xScale.domain()[0])
+        if (point.y > yScale.domain()[1] || point.y < yScale.domain()[0])
           velocities[index].vy *= -1;
       });
 
@@ -146,74 +149,64 @@
     }
   }
 
-
-
-
-//new 
   function handleKeyDown(event) {
-    console.log("Key pressed:", event.key); 
-    if (index === 5) { // Ensure this only works in the relevant part of your application
+    console.log("Key pressed:", event.key);
+    if (index === 5) {
       switch (event.key) {
-        case '1':
+        case "1":
           if (iterations > 0) {
             iterations--;
-            updateDecisionBoundary(); // Directly call update after change
+            updateDecisionBoundary();
           }
           break;
-        case '2':
+        case "2":
           if (iterations < 200) {
             iterations++;
-            updateDecisionBoundary(); // Directly call update after change
+            updateDecisionBoundary();
           }
           break;
       }
     }
   }
 
-
-
-
-
   function updateDecisionBoundary() {
     drawDecisionBoundary();
   }
 
-function drawDecisionBoundary() {
-  const X = irisData.map((d) => [1, d.x, d.y]);
-  const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
+  function drawDecisionBoundary() {
+    const X = irisData.map((d) => [1, d.x, d.y]);
+    const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
 
-  const { weights } = gradientDescent(X, y, 0.1, iterations); // Ensure this uses the updated iterations
+    const { weights } = gradientDescent(X, y, 0.1, iterations);
+    const x1 = xScale.domain()[0];
+    const x2 = xScale.domain()[1];
+    const y1 = (-weights[0] - weights[1] * x1) / weights[2];
+    const y2 = (-weights[0] - weights[1] * x2) / weights[2];
 
-  const x1 = xScale.domain()[0];
-  const x2 = xScale.domain()[1];
-  const y1 = (-weights[0] - weights[1] * x1) / weights[2];
-  const y2 = (-weights[0] - weights[1] * x2) / weights[2];
+    const lineData = [
+      { x: x1, y: y1 },
+      { x: x2, y: y2 },
+    ];
 
-  const lineData = [
-    { x: x1, y: y1 },
-    { x: x2, y: y2 },
-  ];
+    const line = d3
+      .line()
+      .x((d) => xScale(d.x))
+      .y((d) => yScale(d.y));
 
-  const line = d3
-    .line()
-    .x((d) => xScale(d.x))
-    .y((d) => yScale(d.y));
-
-  d3.select(svg)
-    .select(".decision-boundary")
-    .selectAll("path")
-    .data([lineData])
-    .join("path")
-    .attr("d", line)
-    .attr("stroke", "red")
-    .attr("stroke-width", 2)
-    .attr("fill", "none");
-}
+    d3.select(svg)
+      .select(".decision-boundary")
+      .selectAll("path")
+      .data([lineData])
+      .join("path")
+      .attr("d", line)
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+  }
 
   function clearDecisionBoundary() {
     d3.select(svg).select(".decision-boundary").selectAll("path").remove();
   }
-
 
   function updateScales(domain) {
     xScale.domain(domain.x);
@@ -240,7 +233,7 @@ function drawDecisionBoundary() {
   onMount(() => {
     const observer = new ResizeObserver(resize);
     observer.observe(svg);
-    window.addEventListener('keydown', handleKeyDown); //new
+    window.addEventListener("keydown", handleKeyDown);
     height = svg.clientHeight - margin.top - margin.bottom;
     width = svg.clientWidth - margin.left - margin.right;
     createScales();
@@ -253,7 +246,7 @@ function drawDecisionBoundary() {
     onDestroy(() => {
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('keydown', handleKeyDown); //new 
+      window.removeEventListener("keydown", handleKeyDown);
     });
   });
 
@@ -273,7 +266,25 @@ function drawDecisionBoundary() {
         }
         break;
       case 1:
+        points = verticalData.map((d, i) => ({
+          id: i,
+          x: d.x,
+          y: d.y,
+          color: d.class === 0 ? color_1 : color_2,
+        }));
+        updateScales(verticalDomain);
+        break;
       case 2:
+        points = spiralData.map((d, i) => ({
+          id: i,
+          x: d.x,
+          y: d.y,
+          color: d.class === 0 ? color_1 : color_2,
+        }));
+        updateScales(spiralDomain);
+        break;
+      case 3:
+      case 4:
       case 5:
       case 6:
       case 7:
@@ -281,12 +292,7 @@ function drawDecisionBoundary() {
           id: i,
           x: d.x,
           y: d.y,
-          color:
-            d.class === "Iris-setosa"
-              ? color_1
-              : d.class === "Iris-versicolor"
-                ? color_2
-                : color_3,
+          color: d.class === "Iris-setosa" ? color_1 : color_2,
         }));
         updateScales(irisDomain);
         break;
@@ -297,6 +303,10 @@ function drawDecisionBoundary() {
     switch (index) {
       case 0:
         return randomDomain;
+      case 1:
+        return verticalDomain;
+      case 2:
+        return spiralDomain;
       default:
         return irisDomain;
     }
@@ -309,12 +319,13 @@ function drawDecisionBoundary() {
       ? "width: 100%; height: 100vh;"
       : "width: 100%; height: 100%; aspect-ratio: 1 / 1;";
   $: showAxes = index > 0;
+  $: showLegend = index >= 3;
 
   $: legendX = width - margin.right - 90;
   $: legendY = margin.top + 10;
 </script>
 
-<svg bind:this={svg} style={svgStyle} >
+<svg bind:this={svg} style={svgStyle}>
   <g
     class="x-axis"
     style="opacity: {showAxes ? 1 : 0};"
@@ -334,12 +345,11 @@ function drawDecisionBoundary() {
     transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
   ></g>
 
-  <text x="200" y="50" font-size="16px" fill="white">Iterations: {iterations}</text> //new
-  
-  
+  <text x="200" y="50" font-size="16px" fill="white"
+    >Iterations: {iterations}</text
+  >
 
-  <!-- Legend -->
-  {#if showAxes}
+  {#if showLegend}
     <g class="legend" transform={`translate(${legendX}, ${legendY})`}>
       <rect
         width="100"

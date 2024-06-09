@@ -56,6 +56,8 @@
             settings for a model to minimize errors and improve accuracy. In
             this visual journey, we'll explore one of the most fundamental
             optimization techniques used in machine learning, gradient descent.
+            <br /> <br />
+            Project Video Link: https://youtu.be/stFDmdyGfek
           </p>
         </div>
       </section>

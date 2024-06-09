@@ -23,7 +23,7 @@
   let animationFrameId;
   let initialLoad = true;
 
-  let iterations = 50;
+  let iterations = 0;
 
   const randomDomain = { x: [0, 1], y: [0, 1] };
   const irisDomain = calculateDomain(irisData);
@@ -146,45 +146,74 @@
     }
   }
 
-  function drawDecisionBoundary() {
-    const X = irisData.map((d) => [1, d.x, d.y]);
-    const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
 
-    const { weights } = gradientDescent(X, y, 0.1, iterations);
 
-    const x1 = xScale.domain()[0];
-    const x2 = xScale.domain()[1];
-    const y1 = (-weights[0] - weights[1] * x1) / weights[2];
-    const y2 = (-weights[0] - weights[1] * x2) / weights[2];
 
-    const lineData = [
-      { x: x1, y: y1 },
-      { x: x2, y: y2 },
-    ];
-
-    const line = d3
-      .line()
-      .x((d) => xScale(d.x))
-      .y((d) => yScale(d.y));
-
-    d3.select(svg)
-      .select(".decision-boundary")
-      .selectAll("path")
-      .data([lineData])
-      .join("path")
-      .attr("d", line)
-      .attr("stroke", "red")
-      .attr("stroke-width", 2)
-      .attr("fill", "none");
+//new 
+  function handleKeyDown(event) {
+    console.log("Key pressed:", event.key); 
+    if (index === 5) { // Ensure this only works in the relevant part of your application
+      switch (event.key) {
+        case '1':
+          if (iterations > 0) {
+            iterations--;
+            updateDecisionBoundary(); // Directly call update after change
+          }
+          break;
+        case '2':
+          if (iterations < 200) {
+            iterations++;
+            updateDecisionBoundary(); // Directly call update after change
+          }
+          break;
+      }
+    }
   }
+
+
+
+
+
+  function updateDecisionBoundary() {
+    drawDecisionBoundary();
+  }
+
+function drawDecisionBoundary() {
+  const X = irisData.map((d) => [1, d.x, d.y]);
+  const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
+
+  const { weights } = gradientDescent(X, y, 0.1, iterations); // Ensure this uses the updated iterations
+
+  const x1 = xScale.domain()[0];
+  const x2 = xScale.domain()[1];
+  const y1 = (-weights[0] - weights[1] * x1) / weights[2];
+  const y2 = (-weights[0] - weights[1] * x2) / weights[2];
+
+  const lineData = [
+    { x: x1, y: y1 },
+    { x: x2, y: y2 },
+  ];
+
+  const line = d3
+    .line()
+    .x((d) => xScale(d.x))
+    .y((d) => yScale(d.y));
+
+  d3.select(svg)
+    .select(".decision-boundary")
+    .selectAll("path")
+    .data([lineData])
+    .join("path")
+    .attr("d", line)
+    .attr("stroke", "red")
+    .attr("stroke-width", 2)
+    .attr("fill", "none");
+}
 
   function clearDecisionBoundary() {
     d3.select(svg).select(".decision-boundary").selectAll("path").remove();
   }
 
-  function updateDecisionBoundary() {
-    drawDecisionBoundary();
-  }
 
   function updateScales(domain) {
     xScale.domain(domain.x);
@@ -211,7 +240,7 @@
   onMount(() => {
     const observer = new ResizeObserver(resize);
     observer.observe(svg);
-
+    window.addEventListener('keydown', handleKeyDown); //new
     height = svg.clientHeight - margin.top - margin.bottom;
     width = svg.clientWidth - margin.left - margin.right;
     createScales();
@@ -224,6 +253,7 @@
     onDestroy(() => {
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('keydown', handleKeyDown); //new 
     });
   });
 
@@ -284,7 +314,7 @@
   $: legendY = margin.top + 10;
 </script>
 
-<svg bind:this={svg} style={svgStyle}>
+<svg bind:this={svg} style={svgStyle} >
   <g
     class="x-axis"
     style="opacity: {showAxes ? 1 : 0};"
@@ -303,6 +333,10 @@
     class="decision-boundary"
     transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
   ></g>
+
+  <text x="200" y="50" font-size="16px" fill="white">Iterations: {iterations}</text> //new
+  
+  
 
   <!-- Legend -->
   {#if showAxes}
@@ -326,19 +360,3 @@
     </g>
   {/if}
 </svg>
-
-{#if index === 5}
-  <div>
-    <label for="iterations">Iterations:</label>
-    <input
-      type="range"
-      id="iterations"
-      min="0"
-      max="200"
-      step="1"
-      bind:value={iterations}
-      on:input={updateDecisionBoundary}
-    />
-    <span>{iterations}</span>
-  </div>
-{/if}

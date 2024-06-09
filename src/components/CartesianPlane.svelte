@@ -160,7 +160,7 @@
           }
           break;
         case "2":
-          if (iterations < 200) {
+          if (iterations < 1000) {
             iterations++;
             updateDecisionBoundary();
           }
@@ -169,15 +169,47 @@
     }
   }
 
+  let cost = 0;
+  function computeCost(predictions, y) {
+    const m = y.length;
+    if (m === 0) return 0;
+    const adjustedPredictions = predictions.map((p) =>
+      Math.max(Math.min(p, 1 - 1e-9), 1e-9)
+    );
+    return (
+      (-1 / m) *
+      y.reduce((acc, actual, index) => {
+        const pred = adjustedPredictions[index];
+        return (
+          acc + (actual * Math.log(pred) + (1 - actual) * Math.log(1 - pred))
+        );
+      }, 0)
+    );
+  }
+
+  function calculatePredictions(data, weights) {
+    return data.map((d) => {
+      const z = weights[0] + weights[1] * d.x + weights[2] * d.y;
+      return 1 / (1 + Math.exp(-z));
+    });
+  }
+
   function updateDecisionBoundary() {
     drawDecisionBoundary();
+    const X = irisData.map((d) => [1, d.x, d.y]);
+    const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
+    const { weights } = gradientDescent(X, y, 0.1, iterations);
+    // console.log("Weights:", weights);
+    const predictions = calculatePredictions(irisData, weights);
+    // console.log("Predictions:", predictions);
+    cost = computeCost(predictions, y);
+    // console.log("Cost:", cost);
   }
 
   function drawDecisionBoundary() {
     const X = irisData.map((d) => [1, d.x, d.y]);
     const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
-
-    const { weights } = gradientDescent(X, y, 0.1, iterations);
+    const { weights } = gradientDescent(X, y, 0.1, iterations); // Ensure this uses the updated iterations
     const x1 = xScale.domain()[0];
     const x2 = xScale.domain()[1];
     const y1 = (-weights[0] - weights[1] * x1) / weights[2];
@@ -353,6 +385,9 @@
     <text x="200" y="70" font-size="14px" fill="white"
       >Press '1' to decrease, '2' to increase</text
     >
+    <text x="200" y="90" font-size="14px" fill="white"
+      >Cost: {cost.toFixed(4)}</text
+    >
   {/if}
 
   {#if showLegend}
@@ -388,7 +423,7 @@
 
     <!-- Y-axis Title -->
     <text
-      transform={`translate(${margin.left - 30}, ${height / 2}) rotate(-90)`}
+      transform={`translate(${margin.left - 40}, ${height / 2}) rotate(-90)`}
       font-size="16px"
       fill="white"
       text-anchor="middle"

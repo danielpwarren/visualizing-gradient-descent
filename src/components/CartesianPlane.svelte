@@ -139,16 +139,15 @@
       (exit) => exit.remove()
     );
 
-    // new by making sure the only the last one has decision boundary
     if (index === 5) {
       updateDecisionBoundary();
     } else {
       clearDecisionBoundary();
     }
   }
-  //new for adding decision boundary
+
   function drawDecisionBoundary() {
-    const X = irisData.map((d) => [1, d.x, d.y]); // Add intercept term
+    const X = irisData.map((d) => [1, d.x, d.y]);
     const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
 
     const { weights } = gradientDescent(X, y, 0.1, iterations);
@@ -228,7 +227,6 @@
     });
   });
 
-  //new by adding case 567
   function handleIndexChange(index) {
     cancelAnimationFrame(animationFrameId);
     switch (index) {
@@ -245,61 +243,9 @@
         }
         break;
       case 1:
-        points = irisData.map((d, i) => ({
-          id: i,
-          x: d.x,
-          y: d.y,
-          color:
-            d.class === "Iris-setosa"
-              ? color_1
-              : d.class === "Iris-versicolor"
-                ? color_2
-                : color_3,
-        }));
-        updateScales(irisDomain);
-        break;
       case 2:
-        points = irisData.map((d, i) => ({
-          id: i,
-          x: d.x,
-          y: d.y,
-          color:
-            d.class === "Iris-setosa"
-              ? color_1
-              : d.class === "Iris-versicolor"
-                ? color_2
-                : color_3,
-        }));
-        updateScales(irisDomain);
-        break;
       case 5:
-        points = irisData.map((d, i) => ({
-          id: i,
-          x: d.x,
-          y: d.y,
-          color:
-            d.class === "Iris-setosa"
-              ? color_1
-              : d.class === "Iris-versicolor"
-                ? color_2
-                : color_3,
-        }));
-        updateScales(irisDomain);
-        break;
       case 6:
-        points = irisData.map((d, i) => ({
-          id: i,
-          x: d.x,
-          y: d.y,
-          color:
-            d.class === "Iris-setosa"
-              ? color_1
-              : d.class === "Iris-versicolor"
-                ? color_2
-                : color_3,
-        }));
-        updateScales(irisDomain);
-        break;
       case 7:
         points = irisData.map((d, i) => ({
           id: i,
@@ -333,6 +279,9 @@
       ? "width: 100%; height: 100vh;"
       : "width: 100%; height: 100%; aspect-ratio: 1 / 1;";
   $: showAxes = index > 0;
+
+  $: legendX = width - margin.right - 90;
+  $: legendY = margin.top + 10;
 </script>
 
 <svg bind:this={svg} style={svgStyle}>
@@ -350,11 +299,32 @@
     class="points"
     transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
   ></g>
-
   <g
     class="decision-boundary"
     transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
   ></g>
+
+  <!-- Legend -->
+  {#if showAxes}
+    <g class="legend" transform={`translate(${legendX}, ${legendY})`}>
+      <rect
+        width="100"
+        height="50"
+        fill="rgba(0, 0, 0, 0.9)"
+        stroke="black"
+        rx="10"
+        ry="10"
+      ></rect>
+      <g transform="translate(10, 10)">
+        <circle cx="5" cy="5" r="5" fill={color_1}></circle>
+        <text x="15" y="10" font-size="12px" fill="white">Setosa</text>
+      </g>
+      <g transform="translate(10, 30)">
+        <circle cx="5" cy="5" r="5" fill={color_2}></circle>
+        <text x="15" y="10" font-size="12px" fill="white">Versicolor</text>
+      </g>
+    </g>
+  {/if}
 </svg>
 
 {#if index === 5}

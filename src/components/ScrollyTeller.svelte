@@ -125,29 +125,9 @@
         </p>
       </section>
       <section class="translate-right">
-        <h1>Playground</h1>
-        <p>
-          Visual: Interactive sliders controlling the learning rate, initial
-          point, and perhaps even the type of gradient descent (stochastic vs.
-          batch vs. mini-batch). Show the path on the cost function curve live
-          as parameters are adjusted.
-        </p>
-        <p>
-          Explore gradient descent by adjusting the parameters yourself. Change
-          the learning rate, initial starting point, or gradient descent type.
-          Watch how these changes affect the path to convergence on the cost
-          function. This hands-on interaction can deepen your understanding of
-          the dynamics of gradient descent.
-        </p>
-      </section>
-        <section class="translate-right">
         <h1>Adding animation</h1>
-        <p>
-            ANIMATON!!!
-        </p>
-        <p>
-            ANIMATON????
-        </p>
+        <p>ANIMATON!!!</p>
+        <p>ANIMATON????</p>
       </section>
     </div>
   </Scroller>

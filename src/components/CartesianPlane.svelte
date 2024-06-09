@@ -4,9 +4,7 @@
   import * as d3 from "d3";
   import randomData from "../assets/random_data.json";
   import irisData from "../assets/iris_data.json";
-  import verticalData from "../assets/vertical_data.json";
-  import spiralData from "../assets/spiral_data.json";
-  import { preprocessData, sigmoid, gradientDescent } from '../components/logisticregression.js';
+  import { gradientDescent } from "../components/logisticregression.js";
 
   let color_1 = "#4A90E2";
   let color_2 = "#8BC34A";
@@ -29,8 +27,6 @@
 
   const randomDomain = { x: [0, 1], y: [0, 1] };
   const irisDomain = calculateDomain(irisData);
-  const spiralDomain = calculateDomain(spiralData);
-  const verticalDomain = calculateDomain(verticalData);
 
   function calculateDomain(data) {
     const xExtent = d3.extent(data, (d) => d.x);
@@ -143,18 +139,17 @@
       (exit) => exit.remove()
     );
 
-
-// new by making sure the only the last one has decision boundary
-    if (index === 6) {
+    // new by making sure the only the last one has decision boundary
+    if (index === 5) {
       updateDecisionBoundary();
     } else {
       clearDecisionBoundary();
     }
   }
-//new for adding decision boundary
+  //new for adding decision boundary
   function drawDecisionBoundary() {
-    const X = irisData.map(d => [1, d.x, d.y]); // Add intercept term
-    const y = irisData.map(d => (d.class === "Iris-setosa" ? 0 : 1));
+    const X = irisData.map((d) => [1, d.x, d.y]); // Add intercept term
+    const y = irisData.map((d) => (d.class === "Iris-setosa" ? 0 : 1));
 
     const { weights } = gradientDescent(X, y, 0.1, iterations);
 
@@ -165,12 +160,13 @@
 
     const lineData = [
       { x: x1, y: y1 },
-      { x: x2, y: y2 }
+      { x: x2, y: y2 },
     ];
 
-    const line = d3.line()
-      .x(d => xScale(d.x))
-      .y(d => yScale(d.y));
+    const line = d3
+      .line()
+      .x((d) => xScale(d.x))
+      .y((d) => yScale(d.y));
 
     d3.select(svg)
       .select(".decision-boundary")
@@ -184,10 +180,7 @@
   }
 
   function clearDecisionBoundary() {
-    d3.select(svg)
-      .select(".decision-boundary")
-      .selectAll("path")
-      .remove();
+    d3.select(svg).select(".decision-boundary").selectAll("path").remove();
   }
 
   function updateDecisionBoundary() {
@@ -235,9 +228,7 @@
     });
   });
 
-
-
-//new by adding case 567
+  //new by adding case 567
   function handleIndexChange(index) {
     cancelAnimationFrame(animationFrameId);
     switch (index) {
@@ -281,24 +272,6 @@
         }));
         updateScales(irisDomain);
         break;
-      case 3:
-        points = verticalData.map((d, i) => ({
-          id: i,
-          x: d.x,
-          y: d.y,
-          color: d.class === 0 ? color_1 : color_2,
-        }));
-        updateScales(verticalDomain);
-        break;
-      case 4:
-        points = spiralData.map((d, i) => ({
-          id: i,
-          x: d.x,
-          y: d.y,
-          color: d.class === 0 ? color_1 : color_2,
-        }));
-        updateScales(spiralDomain);
-        break;
       case 5:
         points = irisData.map((d, i) => ({
           id: i,
@@ -312,7 +285,6 @@
                 : color_3,
         }));
         updateScales(irisDomain);
-        startAnimation();
         break;
       case 6:
         points = irisData.map((d, i) => ({
@@ -347,18 +319,10 @@
 
   function getDomain() {
     switch (index) {
-      case 1:
-      case 2:
-      case 5:
-      case 6:
-      case 7:
-        return irisDomain;
-      case 3:
-        return verticalDomain;
-      case 4:
-        return spiralDomain;
-      default:
+      case 0:
         return randomDomain;
+      default:
+        return irisDomain;
     }
   }
 
@@ -371,25 +335,40 @@
   $: showAxes = index > 0;
 </script>
 
-
-
-
 <svg bind:this={svg} style={svgStyle}>
-  <g class="x-axis" style="opacity: {showAxes ? 1 : 0};" in:fade={{ delay: 300, duration: 300 }}></g>
-  <g class="y-axis" style="opacity: {showAxes ? 1 : 0};" in:fade={{ delay: 300, duration: 300 }}></g>
-  <g class="points" transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}></g>
+  <g
+    class="x-axis"
+    style="opacity: {showAxes ? 1 : 0};"
+    in:fade={{ delay: 300, duration: 300 }}
+  ></g>
+  <g
+    class="y-axis"
+    style="opacity: {showAxes ? 1 : 0};"
+    in:fade={{ delay: 300, duration: 300 }}
+  ></g>
+  <g
+    class="points"
+    transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
+  ></g>
 
-  //new 
-  <g class="decision-boundary" transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}></g>
+  <g
+    class="decision-boundary"
+    transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
+  ></g>
 </svg>
 
-
-
-//new
-{#if index === 6}
+{#if index === 5}
   <div>
     <label for="iterations">Iterations:</label>
-    <input type="range" id="iterations" min="0" max="200" step="1" bind:value={iterations} on:input={updateDecisionBoundary} />
+    <input
+      type="range"
+      id="iterations"
+      min="0"
+      max="200"
+      step="1"
+      bind:value={iterations}
+      on:input={updateDecisionBoundary}
+    />
     <span>{iterations}</span>
   </div>
 {/if}

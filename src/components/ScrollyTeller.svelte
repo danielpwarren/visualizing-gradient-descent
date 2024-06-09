@@ -140,6 +140,15 @@
           the dynamics of gradient descent.
         </p>
       </section>
+        <section class="translate-right">
+        <h1>Adding animation</h1>
+        <p>
+            ANIMATON!!!
+        </p>
+        <p>
+            ANIMATON????
+        </p>
+      </section>
     </div>
   </Scroller>
 </div>

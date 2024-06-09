@@ -423,7 +423,7 @@
 
     <!-- Y-axis Title -->
     <text
-      transform={`translate(${margin.left - 40}, ${height / 2}) rotate(-90)`}
+      transform={`translate(${margin.left - 30}, ${height / 2}) rotate(-90)`}
       font-size="16px"
       fill="white"
       text-anchor="middle"

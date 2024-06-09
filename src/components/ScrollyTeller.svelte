@@ -69,6 +69,16 @@
           The size of the learning rate determines the step size in each
           iteration, impacting the number of iterations required for
           convergence.
+          <br /> <br />
+          The gradient measures the amount of error change as the weight changes. Gradient descent is
+          generally used on convex functions, and the direction of the steepest descent is crucial to finding
+          the local minimum. The size of the learning rate decides the number of iterations and the
+          complexity of the gradient descent. The larger the learning rate, the bigger the step size, and vice
+          versa for a smaller step size.
+          <br /> <br />
+           The risk of the cost function should
+            decrease as the number of iteration steps increases. The cost function should converge to a
+            certain amount after a certain number of iterations because the slope is getting closer to zero.
         </p>
       </section>
       <section class="translate-right">
@@ -98,6 +108,23 @@
           how the decision boundary evolves. This demonstrates the practical
           application of gradient descent in optimizing model parameters and
           achieving convergence.
+          <br /> <br />
+          In the next page, we will incorporate an interactive animation that illustrates the gradient descent 
+          iterative process up until the final optimal decision boundary is reached. 
+          The following will be included in this animation:
+          <br /> <br />
+          Initial Setup: Display the first decision boundary on a scatter plot of the data points, starting with
+          the initial values of the parameters, where iteration is 0.
+          <br /> <br />
+          Iteration Steps: Update the decision boundary based on the new parameter values for every
+          iteration. Plot the evolving decision boundary to see how it changes over time.
+          <br /> <br />
+          Convergence: Call attention to the crucial iterations where there is a notable shift in the decision
+          boundary. It aids in identifying the pivotal points in the optimization process
+          <br /> <br />
+          User Controls: Give the user controls to add, substract iteration to view animation. This lets people
+          study the gradient descent process at their own speed and go back over particular steps to have a
+          deeper understanding.
         </p>
       </section>
       <section class="translate-right">
@@ -110,6 +137,12 @@
           <br /> <br />
           As the updates become smaller, the model converges to the optimal parameters,
           and the decision boundary separates the two classes.
+          <br /> <br />
+          The visualization helps the people understand process of gradient descent and shows how it continuously 
+          improves decision-making with iterative steps until reaching the optimal point. The key takeaway is that 
+          gradient descent is powerful! It not only can help us flower lovers identify the Iris species but more 
+          importantly, it transforms random models into precise classifiers, helping to solve daily problems with 
+          understandable models.
         </p>
       </section>
     </div>

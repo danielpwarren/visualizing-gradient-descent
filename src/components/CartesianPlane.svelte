@@ -345,9 +345,15 @@
     transform={`translate(${showAxes ? margin.left : 0}, ${showAxes ? margin.top : 0})`}
   ></g>
 
-  <text x="200" y="50" font-size="16px" fill="white"
-    >Iterations: {iterations}</text
-  >
+  {#if index === 5}
+    <!-- Display current iteration count and controls explanation -->
+    <text x="200" y="50" font-size="16px" fill="white"
+      >Iterations: {iterations}</text
+    >
+    <text x="200" y="70" font-size="14px" fill="white"
+      >Press '1' to decrease, '2' to increase</text
+    >
+  {/if}
 
   {#if showLegend}
     <g class="legend" transform={`translate(${legendX}, ${legendY})`}>
@@ -368,5 +374,26 @@
         <text x="15" y="10" font-size="12px" fill="white">Versicolor</text>
       </g>
     </g>
+
+    <!-- X-axis Title -->
+    <text
+      x={width / 2}
+      y={height + margin.top + 30}
+      font-size="16px"
+      fill="white"
+      text-anchor="middle"
+    >
+      Sepal Length (cm)
+    </text>
+
+    <!-- Y-axis Title -->
+    <text
+      transform={`translate(${margin.left - 30}, ${height / 2}) rotate(-90)`}
+      font-size="16px"
+      fill="white"
+      text-anchor="middle"
+    >
+      Sepal Width (cm)
+    </text>
   {/if}
 </svg>
